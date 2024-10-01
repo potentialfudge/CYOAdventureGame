@@ -5,7 +5,7 @@
 My application will:
 - Let users play an adventure game where they can choose how they want the story to go.
 - Have users be presented with two options at each part of the storyline, where they will choose one of the two.
-- Present users with a word-guessing puzzle (inspired by *Wordle*) at certain points in the story, where they can only proceed further upon successful completion of the puzzle, and they lose a life after every 6 unsuccessful guesses. When they lose 3 lives, they lose all their progress and return to the first stage of the game.
+- Present users with a word-guessing puzzle (inspired by *Wordle*) at certain points in the story, where they can only proceed further upon successful completion of the puzzle. After 6 unsuccessful guesses, they lose all their progress and return to the first stage of the game.
 
 Who can use it? \
 Anyone who has an interest in adventure games and fun word puzzles!
