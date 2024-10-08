@@ -10,14 +10,15 @@ public class Choice {
      * EFFECTS: constructs a Choice with given description and the ID to the StoryBoard it leads to
      */
     public Choice(String description, int nextNodeId) {
-        // stub
+        this.description = description;
+        this.nextNodeId = nextNodeId;
     }
 
     public String getDescription() {
-        return "";
+        return description;
     }
 
     public int getNextNodeId() {
-        return 0;
+        return nextNodeId;
     }
 }

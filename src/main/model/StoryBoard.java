@@ -16,22 +16,25 @@ public class StoryBoard {
      * list of possible choices and whether it has a word guesser or not
      */
     public StoryBoard(int id, String description, List<Choice> choices, boolean hasWordGuesser) {
-        // stub
+        this.id = id;
+        this.description = description;
+        this.choices = choices;
+        this.hasWordGuesser = hasWordGuesser;
     }
 
     public int getId() {
-        return 0;
+        return id;
     }
 
     public String getDescription() {
-        return "";
+        return description;
     }
 
     public List<Choice> getChoices() {
-        return null;
+        return choices;
     }
 
     public boolean hasWordGuesser() {
-        return false;
+        return hasWordGuesser;
     }
 }

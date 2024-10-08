@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 public class TestStory {
     private Story testStory;
-    private StoryBoard board0;
     private StoryBoard board1;
+    private StoryBoard board2;
     
     @BeforeEach
     void runBefore() {
@@ -18,16 +18,16 @@ public class TestStory {
     @Test
     void testConstructor() {
         assertNotNull(testStory);
-        assertNotNull(testStory.getBoardFromId(0));
         assertNotNull(testStory.getBoardFromId(1));
+        assertNotNull(testStory.getBoardFromId(2));
     }
 
     @Test
     void testGetBoardFromValidId() {
-        board0 = testStory.getBoardFromId(0);
         board1 = testStory.getBoardFromId(1);
-        assertEquals(board0, testStory.getBoardFromId(0));
+        board2 = testStory.getBoardFromId(2);
         assertEquals(board1, testStory.getBoardFromId(1));
+        assertEquals(board2, testStory.getBoardFromId(2));
     }
 
     @Test
