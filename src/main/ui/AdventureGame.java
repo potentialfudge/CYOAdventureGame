@@ -27,13 +27,18 @@ public class AdventureGame {
                             +
                             "The door collapses on you and you die. The End");
 
-                    System.out.println("Enter h to view the choices you've made so far!");
+                    System.out.println("Enter h to view the choices you've made so far.");
+                    System.out.println("Enter r to restart the game.");
+
                     String historyInput = scanner.next();
                     if (historyInput.equals("h")) {
                         viewHistory();
                         break;
-                    }
+                    } else if (historyInput.equals("r")) {
+                        currentBoard = story.getBoardFromId(1);
+                        System.out.println(currentBoard.getDescription());
                 }
+                    }
             } else if (currentBoard.hasWordGuesser() && currentBoard.getId() == 3) {
                 WordGuesserGame wordGuesserGame = new WordGuesserGame("HUMAN");
                 boolean passed3 = wordGuesserGame.playGame();
@@ -43,10 +48,15 @@ public class AdventureGame {
                             "You failed to guess the monster's favourite food. He eats you, and you die. The End");
 
                     System.out.println("Enter h to view the choices you've made so far!");
+                    System.out.println("Enter r to restart the game.");
+
                     String historyInput = scanner.next();
                     if (historyInput.equals("h")) {
                         viewHistory();
                         break;
+                    } else if (historyInput.equals("r")) {
+                        System.out.println(currentBoard.getDescription());
+                        currentBoard = story.getBoardFromId(1);
                     }
                 }
             }

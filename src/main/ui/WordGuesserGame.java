@@ -17,7 +17,7 @@ public class WordGuesserGame {
 
     public boolean playGame() {
         for (int round = 0; round < 6; round++) {
-            System.out.print("Please guess your word!");
+            System.out.println("Please guess your word!");
             guessedWord = scanner.nextLine().toUpperCase();
 
             for (int i = 0; i < 5; i++) {
@@ -29,6 +29,8 @@ public class WordGuesserGame {
                     System.out.print(guessedWord.substring(i, i + 1));
                 }
             }
+
+            System.out.println("");
 
             if (guessedWord.equals(correctWord)) {
                 isCorrect = true;
