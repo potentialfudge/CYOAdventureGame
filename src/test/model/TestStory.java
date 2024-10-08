@@ -31,7 +31,7 @@ public class TestStory {
     }
 
     @Test
-    void testGetBoardFromInvalidId() {;
+    void testGetBoardFromInvalidId() {
         assertNull(testStory.getBoardFromId(-2));
         assertNull(testStory.getBoardFromId(51));
     }

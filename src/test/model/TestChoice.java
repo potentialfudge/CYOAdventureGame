@@ -16,6 +16,6 @@ public class TestChoice {
     @Test
     void testConstructor() {
         assertEquals("Try to open the door", testChoice.getDescription());
-        assertEquals(2, testChoice.getNextNodeId());
+        assertEquals(2, testChoice.getNextBoardId());
     }
 }
