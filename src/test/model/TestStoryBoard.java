@@ -12,16 +12,16 @@ public class TestStoryBoard {
     private StoryBoard testEndingBoard;
     private ArrayList<Choice> testChoices;
     private ArrayList<Choice> emptyChoices;
-    private Choice c1;
-    private Choice c2;
+    private Choice choice1;
+    private Choice choice2;
     
     @BeforeEach
     void runBefore() {
-        c1 = new Choice("Try to cross it", 3);
-        c2 = new Choice("Try to walk around it", 4);
+        choice1 = new Choice("Try to cross it", 3);
+        choice2 = new Choice("Try to walk around it", 4);
         testChoices = new ArrayList<>();
-        testChoices.add(c1);
-        testChoices.add(c2);
+        testChoices.add(choice1);
+        testChoices.add(choice2);
         emptyChoices = new ArrayList<>();
         testBoard = new StoryBoard(2, "You come across a river.", testChoices, true);
         testEndingBoard = new StoryBoard(5, "You have discovered the lost treasure! The end.", emptyChoices, false);
