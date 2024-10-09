@@ -27,12 +27,14 @@ public class AdventureGame {
                     System.out.println("You failed to guess the secret code. "
                             + "The door collapses on you and you die. The End");
                     printNonChoiceOptions();
-                    historyHandler();
-                    if (enteredH == true) {
-                        break;
-                    } else {
-                        restart();
-                    }
+                    String historyInput = scanner.next();
+                if (historyInput.equals("h")) {
+                    viewHistory();
+                    break;
+                } else {
+                    currentBoard = story.getBoardFromId(1);
+                    continue;
+                }
                 }
             } else if (currentBoard.hasWordGuesser() && currentBoard.getId() == 3) {
                 WordGuesserGame wordGuesserGame = new WordGuesserGame("HUMAN");
@@ -41,22 +43,26 @@ public class AdventureGame {
                     System.out.println(
                             "You failed to guess the monster's favourite food. He eats you, and you die. The End");
                     printNonChoiceOptions();
-                    historyHandler();
-                    if (enteredH == true) {
-                        break;
-                    } else {
-                        restart();
-                    }
+                    String historyInput = scanner.next();
+                if (historyInput.equals("h")) {
+                    viewHistory();
+                    break;
+                } else {
+                    currentBoard = story.getBoardFromId(1);
+                    continue;
+                }
                 }
             }
 
             if (currentBoard.getChoices().isEmpty()) {
                 printNonChoiceOptions();
-                historyHandler();
-                if (enteredH == true) {
+                String historyInput = scanner.next();
+                if (historyInput.equals("h")) {
+                    viewHistory();
                     break;
                 } else {
-                    restart();
+                    currentBoard = story.getBoardFromId(1);
+                    continue;
                 }
             }
 
@@ -68,7 +74,6 @@ public class AdventureGame {
             choiceHistory.add(currentBoard.getChoices().get(playerChoice - 1).getDescription());
             currentBoard = story.getBoardFromId(nextBoardId);
         }
-
         scanner.close();
     }
 
@@ -85,40 +90,11 @@ public class AdventureGame {
         }
     }
 
-    // MODIFIES: currentBoard, this
-    // EFFECTS: restarts the game, changing the current board to the starting board
-    private void restart() {
-        String historyInput = scanner.next();
-        if (historyInput.equals("r")) {
-            currentBoard = story.getBoardFromId(1);
-            System.out.println(currentBoard.getDescription());
-        }
-    }
-
     // MODIFIES: this
-    // EFFECTS: displays the choices for the current board
-    private void displayChoices() {
-        for (int i = 0; i < currentBoard.getChoices().size(); i++) {
-            System.out.println((i + 1) + " - " + currentBoard.getChoices().get(i).getDescription());
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: prints the messages with options to view choice history or restart the game
+    // EFFECTS: prints the messages with options to view choice history or restart
+    // the game
     private void printNonChoiceOptions() {
         System.out.println("Enter h to view the choices you've made so far!");
         System.out.println("Enter r to restart the game.");
-    }
-
-    // MODIFIES: enteredH, this
-    // EFFECTS: checks whether the user has entered "h" to view choice history,
-    // if yes then displays choice history and sets enteredH to true to help
-    // break the while loop
-    private void historyHandler() {
-        String historyInput = scanner.next();
-        if (historyInput.equals("h")) {
-            viewHistory();
-            enteredH = true;
-        }
     }
 }
