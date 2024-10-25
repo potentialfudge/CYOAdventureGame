@@ -1,5 +1,6 @@
 package ui;
 
+import model.ChoiceHistory;
 import model.Story;
 import model.StoryBoard;
 
@@ -8,11 +9,12 @@ import java.util.ArrayList;
 
 // Represents the adventure game and maps out the overall story
 public class AdventureGame {
-    private static ArrayList<String> choiceHistory = new ArrayList<>();
+    // private static ArrayList<String> choiceHistory = new ArrayList<>();
     Story story = new Story();
     Scanner scanner = new Scanner(System.in);
     StoryBoard currentBoard = story.getBoardFromId(1);
     boolean enteredH;
+    ChoiceHistory choiceHistory = new ChoiceHistory();
 
     // EFFECTS: constructs an adventure game
     @SuppressWarnings("methodlength")
@@ -28,13 +30,13 @@ public class AdventureGame {
                             + "The door collapses on you and you die. The End");
                     printNonChoiceOptions();
                     String historyInput = scanner.next();
-                if (historyInput.equals("h")) {
-                    viewHistory();
-                    break;
-                } else {
-                    currentBoard = story.getBoardFromId(1);
-                    continue;
-                }
+                    if (historyInput.equals("h")) {
+                        viewHistory();
+                        break;
+                    } else {
+                        currentBoard = story.getBoardFromId(1);
+                        continue;
+                    }
                 }
             } else if (currentBoard.hasWordGuesser() && currentBoard.getId() == 3) {
                 WordGuesserGame wordGuesserGame = new WordGuesserGame("HUMAN");
@@ -44,13 +46,13 @@ public class AdventureGame {
                             "You failed to guess the monster's favourite food. He eats you, and you die. The End");
                     printNonChoiceOptions();
                     String historyInput = scanner.next();
-                if (historyInput.equals("h")) {
-                    viewHistory();
-                    break;
-                } else {
-                    currentBoard = story.getBoardFromId(1);
-                    continue;
-                }
+                    if (historyInput.equals("h")) {
+                        viewHistory();
+                        break;
+                    } else {
+                        currentBoard = story.getBoardFromId(1);
+                        continue;
+                    }
                 }
             }
 
@@ -71,7 +73,7 @@ public class AdventureGame {
             }
             int playerChoice = scanner.nextInt();
             int nextBoardId = currentBoard.getChoices().get(playerChoice - 1).getNextBoardId();
-            choiceHistory.add(currentBoard.getChoices().get(playerChoice - 1).getDescription());
+            choiceHistory.addHistory(currentBoard.getChoices().get(playerChoice - 1));
             currentBoard = story.getBoardFromId(nextBoardId);
         }
         scanner.close();
@@ -79,14 +81,14 @@ public class AdventureGame {
 
     // MODIFIES: this
     // EFFECTS: displays the list of choices the user has made so far
-    private static void viewHistory() {
-        if (choiceHistory.isEmpty()) {
+    private void viewHistory() {
+        if (choiceHistory.getChoices().isEmpty()) {
             System.out.println("You haven't made any choices yet!");
         } else {
             System.out.println("Here are the choices you've made so far:");
         }
-        for (int i = 0; i < choiceHistory.size(); i++) {
-            System.out.println((i + 1) + ": " + choiceHistory.get(i));
+        for (int i = 0; i < choiceHistory.getChoices().size(); i++) {
+            System.out.println((i + 1) + ": " + choiceHistory.getChoices().get(i).getDescription());
         }
     }
 
