@@ -129,11 +129,13 @@ public class AdventureGame {
         scanner.close();
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads storyboards from json
     private void loadStoryBoards() {
         JSONReader jsonReader = new JSONReader("data/storyGraph.json");
 
         try {
-            story = jsonReader.read();
+            story = jsonReader.read("storyBoards");
         } catch (IOException e) {
             System.err.println("Failed to load storyboards: " + e.getMessage());
             System.exit(1);
@@ -174,7 +176,7 @@ public class AdventureGame {
     // EFFECTS: loads game from file
     private void loadGame() {
         try {
-            story = jsonReader.read();
+            story = jsonReader.read("currentBoard");
             System.out.println("Loaded game from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);

@@ -1,5 +1,5 @@
 {
-    "currentBoard": {
+    "endBoard": {
        "id": 4,
             "description": "Congratulations, you have guessed the secret code and unlocked the door! You open the door to find a room with multiple chests full of gold coins. The End",
             "choices": [],

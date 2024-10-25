@@ -27,10 +27,10 @@ public class JSONReader {
 
     // EFFECTS: reads adventure game from file and returns it as a map;
     // throws IOException if an error occurs reading data from file
-    public Map<Integer, StoryBoard> read() throws IOException {
+    public Map<Integer, StoryBoard> read(String key) throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseStory(jsonObject);
+        return parseStory(jsonObject, key);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -45,10 +45,10 @@ public class JSONReader {
     }
 
     // EFFECTS: parses story from JSON object and returns it
-    private Map<Integer, StoryBoard> parseStory(JSONObject jsonObject) {
+    private Map<Integer, StoryBoard> parseStory(JSONObject jsonObject, String key) {
         Map<Integer, StoryBoard> story = new HashMap<>();
 
-        JSONArray jsonArray = jsonObject.getJSONArray("storyBoards");
+        JSONArray jsonArray = jsonObject.getJSONArray(key);
         for (Object storyBoardObj : jsonArray) {
             JSONObject nextBoard = (JSONObject) storyBoardObj;
             StoryBoard storyBoard = parseStoryBoard(nextBoard);
