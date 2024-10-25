@@ -21,3 +21,5 @@ As a user, I want to be able to:
 - Play a word guessing puzzle at certain stages, adding variety to the game.
 - Get feedback after each word puzzle guess, so I can understand which letters are correct and improve my guesses.
 - Have different endings based on my choices and puzzle outcomes, so I can play the game multiple times to discover all possible endings.
+- Be presented with an option to save the current state of the game, i.e. save the current storyboard that I am at to file.
+- Be presented with an option to reload the last saved state or storyboard of the game when I open up the game again, and resume where I left off.
