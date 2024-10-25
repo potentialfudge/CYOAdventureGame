@@ -1,0 +1,11 @@
+{
+    "currentBoard": {
+        "id": 1,
+        "description": "You're hiking in the forest by some abandoned ruins when you see something in the bushes out of the corner of your eye. You look for it to see what it is, and it's a clay tablet that looks like it's from at least 2000 years ago. On it, there's something written in a strange language you don't understand, but a few drawings at the bottom resemble a treasure chest of gold, and some other creatures you've never heard of before. There might be a lost treasure, you think.",
+        "choices": [
+            { "description": "Go into ruins", "nextBoardId": 2 },
+            { "description": "Explore the forest", "nextBoardId": 3 }
+        ],
+        "hasWordGuesser": false
+    }
+}

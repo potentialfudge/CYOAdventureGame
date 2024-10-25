@@ -21,4 +21,9 @@ public class ChoiceHistory {
     public List<Choice> getChoices() {
         return choices;
     }
+
+    // EFFECTS: sets choices to given list of choices
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
+    }
 }

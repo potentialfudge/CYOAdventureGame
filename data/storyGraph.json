@@ -1,0 +1,41 @@
+{
+    "storyBoards": [
+        {
+            "id": 1,
+            "description": "You're hiking in the forest by some abandoned ruins when you see something in the bushes out of the corner of your eye. You look for it to see what it is, and it's a clay tablet that looks like it's from at least 2000 years ago. On it, there's something written in a strange language you don't understand, but a few drawings at the bottom resemble a treasure chest of gold, and some other creatures you've never heard of before. There might be a lost treasure, you think.",
+            "choices": [
+                { "description": "Go into ruins", "nextBoardId": 2 },
+                { "description": "Explore the forest", "nextBoardId": 3 }
+            ],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 2,
+            "description": "When you further go into the obscured part of the ruins, you find an extremely dusty locked door, but the lock is nothing like you've ever seen before. It looks like you have to enter some sort of password or code to unlock it. You have 6 tries to guess the secret code!",
+            "choices": [
+                { "description": "You guessed the secret code - enter 1!", "nextBoardId": 4 }
+            ],
+            "hasWordGuesser": true
+        },
+        {
+            "id": 3,
+            "description": "You hear something rustling in the distance. You walk a little further and suddenly, an enormous creature jumps in front of you. It's the monster from the tablet! He says that he would let you pass through on one condition: you guess his favourite food in 6 tries. Otherwise, he eats you and you die.",
+            "choices": [
+                { "description": "You guessed his favourite food - enter 1!", "nextBoardId": 6 }
+            ],
+            "hasWordGuesser": true
+        },
+        {
+            "id": 4,
+            "description": "Congratulations, you have guessed the secret code and unlocked the door! You open the door to find a room with multiple chests full of gold coins. The End",
+            "choices": [],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 6,
+            "description": "That's right, it's human -- so he eats you anyway! The End",
+            "choices": [],
+            "hasWordGuesser": false
+        }
+    ]
+}
