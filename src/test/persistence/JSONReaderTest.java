@@ -43,9 +43,9 @@ public class JSONReaderTest {
         JSONReader reader = new JSONReader("./data/testReaderEndState.json");
         try {
             testStory = reader.read("endBoard");
-            assertEquals(4, testStory.get(1).getId());
-            assertFalse(testStory.get(1).hasWordGuesser());
-            assertEquals(0, testStory.get(1).getChoices().size());
+            assertEquals(4, testStory.get(4).getId());
+            assertFalse(testStory.get(4).hasWordGuesser());
+            assertEquals(0, testStory.get(4).getChoices().size());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
