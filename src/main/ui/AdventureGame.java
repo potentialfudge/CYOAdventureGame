@@ -1,6 +1,7 @@
 package ui;
 
 import model.ChoiceHistory;
+import model.Gamestate;
 import model.StoryBoard;
 
 import java.util.Scanner;
@@ -9,10 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import persistence.JSONReader;
+import persistence.JSONReaderLoader;
 import persistence.JSONWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 // Represents the adventure game and maps out the overall story
 public class AdventureGame {
@@ -23,7 +27,10 @@ public class AdventureGame {
     private ChoiceHistory choiceHistory = new ChoiceHistory();
     private JSONWriter jsonWriter;
     private JSONReader jsonReader;
+    private JSONReaderLoader jsonReaderLoader;
     private static final String JSON_STORE = "./data/storyState.json";
+    private static final String JSON_SAVE = "./data/saveState.json";
+    private Gamestate gameState;
 
     // EFFECTS: constructs an adventure game
     @SuppressWarnings("methodlength")
@@ -35,96 +42,106 @@ public class AdventureGame {
         boolean keepGoing = true;
 
         while (keepGoing == true) {
-            System.out.println(currentBoard.getDescription());
+            System.out.println("Do you want to load a saved game? (y/n)");
+            String loadInput = scanner.next();
+            if (loadInput.equalsIgnoreCase("y")) {
+                loadGame();
+            } else {
+                System.out.println(currentBoard.getDescription());
 
-            if (currentBoard.hasWordGuesser() && currentBoard.getId() == 2) {
-                WordGuesserGame wordGuesserGame = new WordGuesserGame("SOUTH");
-                boolean passed2 = wordGuesserGame.playGame();
-                if (!passed2) {
-                    System.out.println("You failed to guess the secret code. "
-                            + "The door collapses on you and you die. The End");
+                if (currentBoard.hasWordGuesser() && currentBoard.getId() == 2) {
+                    WordGuesserGame wordGuesserGame = new WordGuesserGame("SOUTH");
+                    boolean passed2 = wordGuesserGame.playGame();
+                    if (!passed2) {
+                        System.out.println("You failed to guess the secret code. "
+                                + "The door collapses on you and you die. The End");
+                        printNonChoiceOptions();
+                        String optionInput = scanner.next();
+                        if (optionInput.equalsIgnoreCase("h")) {
+                            viewHistory();
+                            keepGoing = false;
+                        } else if (optionInput.equalsIgnoreCase("r")) {
+                            currentBoard = getBoardFromId(1);
+                            continue;
+                        } else if (optionInput.equalsIgnoreCase("s")) {
+                            saveGame();
+                            ;
+                        } else if (optionInput.equalsIgnoreCase("q")) {
+                            keepGoing = false;
+                        } else {
+                            System.out.println("Selection not valid.");
+                        }
+                    }
+                } else if (currentBoard.hasWordGuesser() && currentBoard.getId() == 3) {
+                    WordGuesserGame wordGuesserGame = new WordGuesserGame("HUMAN");
+                    boolean passed3 = wordGuesserGame.playGame();
+                    if (!passed3) {
+                        System.out.println(
+                                "You failed to guess the monster's favourite food. He eats you, and you die. The End");
+                        printNonChoiceOptions();
+                        String optionInput = scanner.next();
+                        if (optionInput.equalsIgnoreCase("h")) {
+                            viewHistory();
+                            keepGoing = false;
+                        } else if (optionInput.equalsIgnoreCase("r")) {
+                            currentBoard = getBoardFromId(1);
+                            continue;
+                        } else if (optionInput.equalsIgnoreCase("s")) {
+                            saveGame();
+                            ;
+                        } else if (optionInput.equalsIgnoreCase("q")) {
+                            keepGoing = false;
+                        } else {
+                            System.out.println("Selection not valid.");
+                        }
+                    }
+                }
+
+                if (currentBoard.getChoices().isEmpty()) {
                     printNonChoiceOptions();
                     String optionInput = scanner.next();
-                    if (optionInput.equals("h")) {
+                    if (optionInput.equalsIgnoreCase("h")) {
                         viewHistory();
                         keepGoing = false;
-                    } else if (optionInput.equals("r")) {
+                    } else if (optionInput.equalsIgnoreCase("r")) {
                         currentBoard = getBoardFromId(1);
                         continue;
-                    } else if (optionInput.equals("l")) {
-                        loadGame();
-                    } else if (optionInput.equals("q")) {
+                    } else if (optionInput.equalsIgnoreCase("s")) {
+                        saveGame();
+                        ;
+                    } else if (optionInput.equalsIgnoreCase("q")) {
                         keepGoing = false;
                     } else {
                         System.out.println("Selection not valid.");
                     }
                 }
-            } else if (currentBoard.hasWordGuesser() && currentBoard.getId() == 3) {
-                WordGuesserGame wordGuesserGame = new WordGuesserGame("HUMAN");
-                boolean passed3 = wordGuesserGame.playGame();
-                if (!passed3) {
-                    System.out.println(
-                            "You failed to guess the monster's favourite food. He eats you, and you die. The End");
-                    printNonChoiceOptions();
-                    String optionInput = scanner.next();
-                    if (optionInput.equals("h")) {
-                        viewHistory();
-                        keepGoing = false;
-                    } else if (optionInput.equals("r")) {
-                        currentBoard = getBoardFromId(1);
-                        continue;
-                    } else if (optionInput.equals("l")) {
-                        loadGame();
-                    } else if (optionInput.equals("q")) {
-                        keepGoing = false;
-                    } else {
-                        System.out.println("Selection not valid.");
-                    }
-                }
-            }
 
-            if (currentBoard.getChoices().isEmpty()) {
+                for (int i = 0; i < currentBoard.getChoices().size(); i++) {
+                    System.out.println((i + 1) + " - " + currentBoard.getChoices().get(i).getDescription());
+                }
+                int playerChoice = scanner.nextInt();
+                int nextBoardId = currentBoard.getChoices().get(playerChoice - 1).getNextBoardId();
+                choiceHistory.addHistory(currentBoard.getChoices().get(playerChoice - 1));
+
                 printNonChoiceOptions();
-                String optionInput = scanner.next();
-                if (optionInput.equals("h")) {
+                String input = scanner.next();
+                if (input.equalsIgnoreCase("h")) {
                     viewHistory();
                     keepGoing = false;
-                } else if (optionInput.equals("r")) {
+                } else if (input.equalsIgnoreCase("r")) {
                     currentBoard = getBoardFromId(1);
                     continue;
-                } else if (optionInput.equals("l")) {
-                    loadGame();
-                } else if (optionInput.equals("q")) {
+                } else if (input.equalsIgnoreCase("s")) {
+                    saveGame();
+                    ;
+                } else if (input.equalsIgnoreCase("q")) {
                     keepGoing = false;
                 } else {
                     System.out.println("Selection not valid.");
                 }
-            }
 
-            for (int i = 0; i < currentBoard.getChoices().size(); i++) {
-                System.out.println((i + 1) + " - " + currentBoard.getChoices().get(i).getDescription());
+                currentBoard = getBoardFromId(nextBoardId);
             }
-            int playerChoice = scanner.nextInt();
-            int nextBoardId = currentBoard.getChoices().get(playerChoice - 1).getNextBoardId();
-            choiceHistory.addHistory(currentBoard.getChoices().get(playerChoice - 1));
-
-            printNonChoiceOptions();
-            String input = scanner.next();
-            if (input.equals("h")) {
-                viewHistory();
-                keepGoing = false;
-            } else if (input.equals("r")) {
-                currentBoard = getBoardFromId(1);
-                continue;
-            } else if (input.equals("l")) {
-                loadGame();
-            } else if (input.equals("q")) {
-                keepGoing = false;
-            } else {
-                System.out.println("Selection not valid.");
-            }
-
-            currentBoard = getBoardFromId(nextBoardId);
         }
         scanner.close();
     }
@@ -161,7 +178,7 @@ public class AdventureGame {
     private void printNonChoiceOptions() {
         System.out.println("Enter h to view the choices you've made so far!");
         System.out.println("Enter r to restart the game.");
-        System.out.println("Enter l to load the game from file.");
+        System.out.println("Enter s to save the game to file.");
         System.out.println("Enter q to quit.");
     }
 
@@ -176,10 +193,25 @@ public class AdventureGame {
     // EFFECTS: loads game from file
     private void loadGame() {
         try {
-            story = jsonReader.read("currentBoard");
-            System.out.println("Loaded game from " + JSON_STORE);
+            gameState = jsonReaderLoader.read();
+            System.out.println("Loaded game from " + JSON_SAVE);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            System.out.println("Unable to read from file: " + JSON_SAVE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: saves game to file
+    private void saveGame() {
+        jsonWriter = new JSONWriter("data/saveState.json");
+
+        try {
+            jsonWriter.open();
+            jsonWriter.writeCurrentState(currentBoard.getId(), choiceHistory.getChoices());
+            jsonWriter.close();
+            System.out.println("Game saved!");
+        } catch (IOException e) {
+            System.out.println("Error: Could not save the game.");
         }
     }
 }

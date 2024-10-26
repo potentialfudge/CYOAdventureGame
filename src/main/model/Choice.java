@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Represents a choice with a description and a next node
 public class Choice {
     private String description;
@@ -20,5 +22,13 @@ public class Choice {
 
     public int getNextBoardId() {
         return nextBoardId;
+    }
+
+    // EFFECTS: converts choice to a JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("description", description);
+        json.put("nextBoardId", nextBoardId);
+        return json;
     }
 }

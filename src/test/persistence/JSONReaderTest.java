@@ -50,4 +50,18 @@ public class JSONReaderTest {
             fail("Couldn't read from file");
         }
     }
+
+    @Test
+    void testReaderWordGuesserState() {
+        JSONReader reader = new JSONReader("./data/testReaderWordGuesserState.json");
+        try {
+            testStory = reader.read("wordGuesserBoard");
+            assertEquals(2, testStory.get(2).getId());
+            assertTrue(testStory.get(2).hasWordGuesser());
+            assertEquals(1, testStory.get(2).getChoices().size());
+            assertEquals("You guessed the secret code - enter 1!", testStory.get(2).getChoices().get(0).getDescription());
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
 }
