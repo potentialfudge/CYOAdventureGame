@@ -1,0 +1,13 @@
+{
+    "choiceHistory": [
+        {
+            "nextBoardId": 3,
+            "description": "Go left"
+        },
+        {
+            "nextBoardId": 4,
+            "description": "Go right"
+        }
+    ],
+    "newBoardId": 5
+}

@@ -17,13 +17,9 @@ public class ChoiceHistory {
         choices.add(choice);
     }
 
-    // EFFECTS: returns list of choices taken so far, returns null if no choices taken yet
+    // EFFECTS: returns list of choices taken so far, returns null if no choices
+    // taken yet
     public List<Choice> getChoices() {
         return choices;
-    }
-
-    // EFFECTS: sets choices to given list of choices
-    public void setChoices(List<Choice> choices) {
-        this.choices = choices;
     }
 }

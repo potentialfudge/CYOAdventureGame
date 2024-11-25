@@ -9,15 +9,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
-public class JSONWriter {
+public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;
 
     // EFFECTS: constructs writer to write to destination file
-    public JSONWriter(String destination) {
+    public JsonWriter(String destination) {
         this.destination = destination;
     }
 
@@ -30,9 +29,9 @@ public class JSONWriter {
 
     // MODIFIES: this
     // EFFECTS: writes a JSON representation of the current game state to file
-    public void writeCurrentState(int currentBoardId, List<Choice> choiceHistory) {
+    public void writeCurrentState(int newBoardId, List<Choice> choiceHistory) {
         JSONObject json = new JSONObject();
-        json.put("currentBoardId", currentBoardId);
+        json.put("newBoardId", newBoardId);
 
         JSONArray jsonChoiceHistory = new JSONArray();
         for (Choice choice : choiceHistory) {

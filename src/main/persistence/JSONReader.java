@@ -1,9 +1,7 @@
 package persistence;
 
 import model.Choice;
-import model.ChoiceHistory;
 import model.StoryBoard;
-import ui.AdventureGame;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -17,11 +15,11 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
-public class JSONReader {
+public class JsonReader {
     private String source;
 
     // EFFECTS: constructs reader to read from source file
-    public JSONReader(String source) {
+    public JsonReader(String source) {
         this.source = source;
     }
 

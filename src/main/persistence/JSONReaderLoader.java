@@ -1,28 +1,23 @@
 package persistence;
 
 import model.Choice;
-import model.ChoiceHistory;
 import model.Gamestate;
-import model.StoryBoard;
-import ui.AdventureGame;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.json.*;
 
-public class JSONReaderLoader {
+public class JsonReaderLoader {
     private String source;
 
     // EFFECTS: constructs reader to read from source file
-    public JSONReaderLoader(String source) {
+    public JsonReaderLoader(String source) {
         this.source = source;
     }
 
@@ -47,7 +42,7 @@ public class JSONReaderLoader {
 
     // EFFECTS: parses game state from JSON object and returns it
     private Gamestate parseStory(JSONObject jsonObject) {
-        int currentBoardId = jsonObject.getInt("currentBoardId");
+        int newBoardId = jsonObject.getInt("newBoardId");
         List<Choice> choiceHistory = new ArrayList<>();
         JSONArray jsonChoiceHistory = jsonObject.getJSONArray("choiceHistory");
 
@@ -57,6 +52,6 @@ public class JSONReaderLoader {
             int nextBoardId = jsonChoice.getInt("nextBoardId");
             choiceHistory.add(new Choice(description, nextBoardId));
         }
-        return new Gamestate(currentBoardId, choiceHistory);
+        return new Gamestate(newBoardId, choiceHistory);
     }
 }

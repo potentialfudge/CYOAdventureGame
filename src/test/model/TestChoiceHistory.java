@@ -25,6 +25,7 @@ public class TestChoiceHistory {
     @Test
     void addOneChoice() {
         testHistory.addHistory(c1);
+        assertEquals(1, testHistory.getChoices().size());
         assertEquals(c1, testHistory.getChoices().get(0));
     }
 
@@ -32,7 +33,17 @@ public class TestChoiceHistory {
     void addTwoChoices() {
         testHistory.addHistory(c1);
         testHistory.addHistory(c2);
+        assertEquals(2, testHistory.getChoices().size());
         assertEquals(c1, testHistory.getChoices().get(0));
         assertEquals(c2, testHistory.getChoices().get(1));
+    }
+
+    @Test
+    void addSameChoiceTwice() {
+        testHistory.addHistory(c1);
+        testHistory.addHistory(c1);
+        assertEquals(2, testHistory.getChoices().size());
+        assertEquals(c1, testHistory.getChoices().get(0));
+        assertEquals(c1, testHistory.getChoices().get(1));
     }
 }
