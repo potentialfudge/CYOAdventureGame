@@ -100,7 +100,7 @@ public class AdventureGame {
                 } else if (optionInput.equalsIgnoreCase("s")) {
                     saveGame();
                 } else if (optionInput.equalsIgnoreCase("q")) {
-                    keepGoing = false;
+                    break;
                 } else {
                     System.out.println("Selection not valid.");
                 }
