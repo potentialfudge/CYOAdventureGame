@@ -145,8 +145,7 @@ public class AdventureGameGUI {
         String guess = wordGuessInputField.getText().toUpperCase();
         String target = getWordGuessTarget();
         if (guess.length() == target.length()) {
-            boolean correct = true;
-            evaluateGuess(guess, target);
+            boolean correct = evaluateGuess(guess, target);
             panel.revalidate();
             panel.repaint();
             handleWordGuessAttempt(correct);
