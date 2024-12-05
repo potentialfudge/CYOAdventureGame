@@ -17,6 +17,12 @@ public class ChoiceHistory {
         choices.add(choice);
     }
 
+    // MODIFIES: this
+    // EFFECTS: clears choice history
+    public void clearHistory() {
+        choices.clear();
+    }
+
     // EFFECTS: returns list of choices taken so far, returns null if no choices
     // taken yet
     public List<Choice> getChoices() {

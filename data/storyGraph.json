@@ -13,7 +13,8 @@
             "id": 2,
             "description": "When you further go into the obscured part of the ruins, you find an extremely dusty locked door, but the lock is nothing like you've ever seen before. It looks like you have to enter some sort of password or code to unlock it. You have 6 tries to guess the secret code!",
             "choices": [
-                { "description": "You guessed the secret code - enter 1!", "nextBoardId": 4 }
+                { "description": "You guessed the secret code!", "nextBoardId": 4 },
+                { "description": "You did not guess the code in 6 tries.", "nextBoardId": 5 }
             ],
             "hasWordGuesser": true
         },
@@ -21,13 +22,26 @@
             "id": 3,
             "description": "You hear something rustling in the distance. You walk a little further and suddenly, an enormous creature jumps in front of you. It's the monster from the tablet! He says that he would let you pass through on one condition: you guess his favourite food in 6 tries. Otherwise, he eats you and you die.",
             "choices": [
-                { "description": "You guessed his favourite food - enter 1!", "nextBoardId": 6 }
+                { "description": "You guessed his favourite food!", "nextBoardId": 6 },
+                { "description": "You did not guess his favourite food fast enough.", "nextBoardId": 7 }
             ],
             "hasWordGuesser": true
         },
         {
             "id": 4,
             "description": "Congratulations, you have guessed the secret code and unlocked the door! You open the door to find a room with multiple chests full of gold coins. The End",
+            "choices": [],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 5,
+            "description": "You did not guess the code in 6 tries. The door collapses on you, and you die. The End",
+            "choices": [],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 7,
+            "description": "You did not guess his favourite food fast enough, and he gets impatient. He eats you, and you die. The End",
             "choices": [],
             "hasWordGuesser": false
         },

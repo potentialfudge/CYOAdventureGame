@@ -1,21 +1,7 @@
 {
-    "choiceHistory": [
-        {
-            "nextBoardId": 2,
-            "description": "Go into ruins"
-        },
-        {
-            "nextBoardId": 4,
-            "description": "You guessed the secret code - enter 1!"
-        },
-        {
-            "nextBoardId": 2,
-            "description": "Go into ruins"
-        },
-        {
-            "nextBoardId": 4,
-            "description": "You guessed the secret code - enter 1!"
-        }
-    ],
-    "newBoardId": 4
+    "choiceHistory": [{
+        "nextBoardId": 2,
+        "description": "Go into ruins"
+    }],
+    "newBoardId": 2
 }

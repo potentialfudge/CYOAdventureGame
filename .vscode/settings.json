@@ -1,11 +1,13 @@
 {
     "java.project.sourcePaths": [
         "src/main",
-        "src/test"
+        "src/test",
+        "resources"
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "resources/**"
     ],
     "java.checkstyle.configuration": "${workspaceFolder}/checkstyle.xml",
     "java.checkstyle.version": "10.2"

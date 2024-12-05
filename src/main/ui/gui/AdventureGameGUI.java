@@ -1,0 +1,287 @@
+package ui.gui;
+
+import javax.swing.*;
+
+import model.GameLogic;
+import model.Choice;
+import model.ChoiceHistory;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AdventureGameGUI {
+    private GameLogic gameLogic;
+    private JFrame frame;
+    private JTextArea gameDescriptionArea;
+    private JButton choiceButton1;
+    private JButton choiceButton2;
+    private JTextField wordGuessInputField;
+    private JButton submitWordGuessButton;
+    private JPanel panel;
+    private ChoiceHistory choiceHistory;
+    private JTextArea choiceHistoryArea;
+    private JLabel attemptsRemainingLabel;
+    private int wordGuessAttempts = 0;
+    private JButton quitButton;
+    private JButton restartButton;
+
+    public AdventureGameGUI() {
+        gameLogic = new GameLogic();
+        choiceHistory = gameLogic.getChoiceHistory();
+        setupUI();
+        askToLoadSavedGame();
+    }
+
+    @SuppressWarnings("methodlength")
+    public void setupUI() {
+        frame = new JFrame("Adventure Game");
+        frame.setSize(800, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        gameDescriptionArea = new JTextArea();
+        gameDescriptionArea.setEditable(false);
+        gameDescriptionArea.setLineWrap(true);
+        gameDescriptionArea.setWrapStyleWord(true);
+        panel.add(gameDescriptionArea);
+
+        choiceButton1 = new JButton();
+        choiceButton2 = new JButton();
+        panel.add(choiceButton1);
+        panel.add(choiceButton2);
+
+        wordGuessInputField = new JTextField();
+        submitWordGuessButton = new JButton("Submit");
+        panel.add(wordGuessInputField);
+        panel.add(submitWordGuessButton);
+
+        attemptsRemainingLabel = new JLabel("no. of attempts remaining: 6");
+        panel.add(attemptsRemainingLabel);
+
+        choiceHistoryArea = new JTextArea();
+        choiceHistoryArea.setEditable(false);
+        choiceHistoryArea.setPreferredSize(new Dimension(300, 100));
+        panel.add(new JScrollPane(choiceHistoryArea));
+
+        quitButton = new JButton("Quit");
+        restartButton = new JButton("Restart");
+        panel.add(quitButton);
+        panel.add(restartButton);
+
+        frame.add(panel);
+        addMenu();
+        frame.setVisible(true);
+        updateGameView();
+        addButtonListener();
+    }
+
+    private void addMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem saveExitMenuItem = new JMenuItem("Save & Exit");
+        saveExitMenuItem.addActionListener(e -> askToSaveAndExit());
+        fileMenu.add(saveExitMenuItem);
+        menuBar.add(fileMenu);
+
+        JMenu optionsMenu = new JMenu("Game Options");
+        JMenuItem quitMenuItem = new JMenuItem("Quit");
+        JMenuItem restartMenuItem = new JMenuItem("Restart");
+        quitMenuItem.addActionListener(e -> quitGame());
+        restartMenuItem.addActionListener(e -> restartGame());
+        optionsMenu.add(quitMenuItem);
+        optionsMenu.add(restartMenuItem);
+        menuBar.add(optionsMenu);
+
+        frame.setJMenuBar(menuBar);
+    }
+
+    private void addButtonListener() {
+        choiceButton1.addActionListener(e -> processChoice(0));
+        choiceButton2.addActionListener(e -> processChoice(1));
+
+        submitWordGuessButton.addActionListener(e -> processWordGameGuess());
+
+        quitButton.addActionListener(e -> quitGame());
+        restartButton.addActionListener(e -> restartGame());
+    }
+
+    private void updateGameView() {
+        gameDescriptionArea.setText(gameLogic.getCurrentBoardDescription());
+
+        List<Choice> choices = gameLogic.getCurrentBoardChoices();
+
+        boolean isWordGuesser = gameLogic.hasWordGuesser();
+        choiceButton1.setVisible(!isWordGuesser && choices.size() > 0);
+        choiceButton2.setVisible(!isWordGuesser && choices.size() > 1);
+
+        if (choices.size() > 0) {
+            choiceButton1.setText(choices.get(0).getDescription());
+        }
+        if (choices.size() > 1) {
+            choiceButton2.setText(choices.get(1).getDescription());
+        }
+
+        wordGuessInputField.setVisible(isWordGuesser);
+        submitWordGuessButton.setVisible(isWordGuesser);
+        attemptsRemainingLabel.setVisible(isWordGuesser);
+
+        boolean isEnding = gameLogic.isGameOver();
+        quitButton.setVisible(isEnding);
+        restartButton.setVisible(isEnding);
+
+        updateChoiceHistoryDisplay();
+    }
+
+    private void processChoice(int choiceIndex) {
+        gameLogic.makeChoice(choiceIndex);
+        updateGameView();
+    }
+
+    private void processWordGameGuess() {
+        String guess = wordGuessInputField.getText().toUpperCase();
+        String target = getWordGuessTarget();
+        if (guess.length() == target.length()) {
+            boolean correct = true;
+            evaluateGuess(guess, target);
+            panel.revalidate();
+            panel.repaint();
+            handleWordGuessAttempt(correct);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Your guess must be " + target.length() + " letters long.");
+        }
+    }
+
+    private Boolean evaluateGuess(String guess, String target) {
+        boolean correctLetter = true;
+        for (int i = 0; i < guess.length(); i++) {
+            JLabel label = new JLabel(String.valueOf(guess.charAt(i)));
+            if (guess.charAt(i) == target.charAt(i)) {
+                label.setBackground(Color.GREEN);
+            } else if (target.contains(String.valueOf(guess.charAt(i)))) {
+                label.setBackground(Color.YELLOW);
+                correctLetter = false;
+            } else {
+                label.setBackground(Color.GRAY);
+                correctLetter = false;
+            }
+            label.setOpaque(true);
+            panel.add(label);
+        }
+        return correctLetter;
+    }
+
+    private String getWordGuessTarget() {
+        String tgt;
+        if (gameLogic.getCurrentBoardId() == 2) {
+            tgt = "SOUTH";
+        } else {
+            tgt = "HUMAN";
+        }
+        return tgt;
+    }
+
+    private void handleWordGuessAttempt(Boolean status) {
+        if (status) {
+            JOptionPane.showMessageDialog(frame, "Correct! Moving to the next stage.");
+            gameLogic.proceedSuccessfulWordGuesser();
+            updateGameView();
+        } else {
+            JOptionPane.showMessageDialog(frame, "Incorrect guess. Try again.");
+            wordGuessAttempts++;
+            int attemptsRemaining = 6 - wordGuessAttempts;
+            attemptsRemainingLabel.setText("no. of attempts remaining: " + attemptsRemaining);
+            updateGameView();
+            if (wordGuessAttempts >= 6) {
+                JOptionPane.showMessageDialog(frame, "Sorry, you did not guess the code in 6 tries.");
+                gameLogic.proceedFailedWordGuesser();
+                updateGameView();
+            }
+        }
+    }
+
+    private void updateChoiceHistoryDisplay() {
+        StringBuilder historyText = new StringBuilder();
+        for (Choice choice : choiceHistory.getChoices()) {
+            historyText.append(choice.getDescription()).append("\n");
+        }
+        choiceHistoryArea.setText(historyText.toString());
+    }
+
+    private void askToLoadSavedGame() {
+        int option = JOptionPane.showConfirmDialog(frame, "Do you want to load a saved game?",
+                "Load Saved Game", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            loadSavedGame();
+        } else {
+            startNewGame();
+        }
+    }
+
+    private void loadSavedGame() {
+        if (gameLogic.loadGame()) {
+            JOptionPane.showMessageDialog(frame, "Game loaded successfully!");
+            updateGameView();
+        } else {
+            JOptionPane.showMessageDialog(frame, "No saved game found, starting a new game.");
+            startNewGame();
+        }
+    }
+
+    private void startNewGame() {
+        gameLogic.startNewGame();
+        updateGameView();
+    }
+
+    public void askToSaveAndExit() {
+        int option = JOptionPane.showConfirmDialog(
+                frame,
+                "Would you like to save your game and exit?",
+                "Save and Exit",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (option == JOptionPane.YES_OPTION) {
+            gameLogic.saveGame();
+
+            JOptionPane.showMessageDialog(frame, "Game saved. Exiting...");
+            SwingUtilities.invokeLater(() -> frame.dispose());
+        } else if (option == JOptionPane.NO_OPTION) {
+            // continue playing
+        }
+    }
+
+    public void quitGame() {
+        int option = JOptionPane.showConfirmDialog(
+                frame,
+                "Are you sure you want to quit the game? This will not save any new progress.",
+                "Quit",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (option == JOptionPane.YES_OPTION) {
+            SwingUtilities.invokeLater(() -> frame.dispose());
+        } else if (option == JOptionPane.NO_OPTION) {
+            // continue playing
+        }
+    }
+
+    public void restartGame() {
+        int option = JOptionPane.showConfirmDialog(
+                frame,
+                "Are you sure you want to restart? Your progress will be lost.",
+                "Restart",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (option == JOptionPane.YES_OPTION) {
+            gameLogic.startNewGame();
+        } else if (option == JOptionPane.NO_OPTION) {
+            // continue playing
+        }
+    }
+}
