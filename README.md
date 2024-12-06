@@ -31,13 +31,16 @@ As a user, I want to be able to:
 - You can save the state of my application by going to the top menu and clicking File > Save and Exit.
 - You can reload the state of my application by going to the top menu and clicking Game Options > Restart.
 
-# Phase 4: Task 2
-Storyboards successfully loaded
-Selected choice: Explore the forest
-Selected choice: Try to open the door
-You guessed the code!
-Selected choice: Rizz her up
-Selected choice: Go down the trapdoor
-Choice removed from history: Try to open the door
-You guessed the code!
+### Phase 4: Task 2
+Storyboards successfully loaded \
+Selected choice: Explore the forest \
+Selected choice: Try to open the door \
+You guessed the code! \
+Selected choice: Rizz her up \
+Selected choice: Go down the trapdoor \
+Choice removed from history: Try to open the door \
+You guessed the code! \
 Selected choice: Go left
+
+### Phase 4: Task 3
+One thing I would want to refactor is the relationship between GameLogic and StoryBoard. GameLogic has a map/graph of all the storyboards, and retrieves one whenever it is needed. I would add something like a storyboard manager class which handles only the logic of traversing through storyboards. This would also make it easier if storyboards need to be added or manipulated in the future.
