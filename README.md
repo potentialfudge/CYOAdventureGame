@@ -30,3 +30,14 @@ As a user, I want to be able to:
 - You can locate my visual component when you first start up the application, as it is an image splash screen.
 - You can save the state of my application by going to the top menu and clicking File > Save and Exit.
 - You can reload the state of my application by going to the top menu and clicking Game Options > Restart.
+
+# Phase 4: Task 2
+Storyboards successfully loaded
+Selected choice: Explore the forest
+Selected choice: Try to open the door
+You guessed the code!
+Selected choice: Rizz her up
+Selected choice: Go down the trapdoor
+Choice removed from history: Try to open the door
+You guessed the code!
+Selected choice: Go left

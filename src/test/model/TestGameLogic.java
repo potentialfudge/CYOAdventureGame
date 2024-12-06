@@ -73,4 +73,14 @@ public class TestGameLogic {
         assertFalse(testGameLogic.loadGame());
         assertEquals(1, testGameLogic.getCurrentBoardId());
     }
+
+    @Test
+    void removeValidChoiceDescription() {
+        testGameLogic.startNewGame();
+        testGameLogic.makeChoice(0);
+        testGameLogic.makeChoice(1);
+        testGameLogic.removeChoiceByDescription("Go into ruins");
+        assertEquals(1, testGameLogic.getChoiceHistory().getChoices().size());
+        assertEquals("Go down the stairs", testGameLogic.getChoiceHistory().getChoices().get(0).getDescription());
+    }
 }

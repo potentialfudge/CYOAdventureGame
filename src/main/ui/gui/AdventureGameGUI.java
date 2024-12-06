@@ -79,12 +79,14 @@ public class AdventureGameGUI {
                     showContextMenu(e);
                 }
             }
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (SwingUtilities.isRightMouseButton(e)) {
                     showContextMenu(e);
                 }
-            }});
+            }
+        });
 
         wordGuesserFeedbackPanel = new JPanel();
         wordGuesserFeedbackPanel.setLayout(new BoxLayout(wordGuesserFeedbackPanel, BoxLayout.Y_AXIS));
@@ -106,9 +108,9 @@ public class AdventureGameGUI {
     // EFFECTS: shows menu option to remove selected choice from choice history
     private void showContextMenu(MouseEvent e) {
         try {
-            int lineNum = getLineAtPoint(e.getPoint());    
+            int lineNum = getLineAtPoint(e.getPoint());
             String clickedText = getTextAtLine(lineNum);
-            
+
             JPopupMenu contextMenu = new JPopupMenu();
             JMenuItem removeMenuItem = new JMenuItem("Remove Choice from History");
             contextMenu.add(removeMenuItem);
@@ -287,7 +289,7 @@ public class AdventureGameGUI {
         if (status) {
             JOptionPane.showMessageDialog(frame, "Correct! Moving to the next stage.");
             gameLogic.proceedSuccessfulWordGuesser();
-            wordGuessAttempts = 6;
+            wordGuessAttempts = 0;
             clearInputField();
             updateGameView();
         } else {
@@ -299,7 +301,7 @@ public class AdventureGameGUI {
             if (wordGuessAttempts >= 6) {
                 JOptionPane.showMessageDialog(frame, "Sorry, you did not guess the code in 6 tries.");
                 gameLogic.proceedFailedWordGuesser();
-                wordGuessAttempts = 6;
+                wordGuessAttempts = 0;
                 clearInputField();
                 updateGameView();
             }
@@ -383,6 +385,7 @@ public class AdventureGameGUI {
 
         if (option == JOptionPane.YES_OPTION) {
             SwingUtilities.invokeLater(() -> frame.dispose());
+            gameLogic.quitLog();
         } else if (option == JOptionPane.NO_OPTION) {
             // continue playing
         }

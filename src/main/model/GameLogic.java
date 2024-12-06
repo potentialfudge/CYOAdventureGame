@@ -17,6 +17,7 @@ public class GameLogic {
     private Gamestate gameState;
     private static final String JSON_STORE = "./data/storyGraph.json";
     private static final String JSON_SAVE = "./data/saveState.json";
+    private EventLog eventLog = EventLog.getInstance();
 
     public GameLogic() {
         loadStoryBoards();
@@ -29,6 +30,7 @@ public class GameLogic {
         JsonReader jsonReader = new JsonReader(JSON_STORE);
         try {
             story = jsonReader.read("storyBoards");
+            eventLog.logEvent(new Event("Storyboards successfully loaded"));
         } catch (IOException e) {
             System.err.println("Failed to load game: " + e.getMessage());
         }
@@ -47,6 +49,7 @@ public class GameLogic {
     public int makeChoice(int choiceIndex) {
         Choice selectedChoice = currentBoard.getChoices().get(choiceIndex);
         choiceHistory.addHistory(selectedChoice);
+        eventLog.logEvent(new Event("Selected choice: " + selectedChoice.getDescription()));
         currentBoard = getBoardFromId(selectedChoice.getNextBoardId());
         return currentBoard.getId();
     }
@@ -56,6 +59,7 @@ public class GameLogic {
     public void proceedSuccessfulWordGuesser() {
         Choice wordChoice = currentBoard.getChoices().get(0);
         choiceHistory.addHistory(wordChoice);
+        eventLog.logEvent(new Event(wordChoice.getDescription()));
         currentBoard = getBoardFromId(wordChoice.getNextBoardId());
     }
 
@@ -65,6 +69,7 @@ public class GameLogic {
     public void proceedFailedWordGuesser() {
         Choice wordChoice = currentBoard.getChoices().get(1);
         choiceHistory.addHistory(wordChoice);
+        eventLog.logEvent(new Event(wordChoice.getDescription()));
         currentBoard = getBoardFromId(wordChoice.getNextBoardId());
     }
 
@@ -76,6 +81,7 @@ public class GameLogic {
         try {
             gameState = jsonReaderLoader.read();
             currentBoard = getBoardFromId(gameState.getCurrentBoardId());
+            eventLog.logEvent(new Event("Saved game loaded"));
             return true;
         } catch (IOException e) {
             return false;
@@ -127,6 +133,7 @@ public class GameLogic {
                     choiceHistory.getChoices().get(choiceHistory.getChoices().size() - 1).getNextBoardId(),
                     choiceHistory.getChoices());
             jsonWriter.close();
+            eventLog.logEvent(new Event("Game saved to file"));
         } catch (IOException e) {
             System.err.println("Failed to save game: " + e.getMessage());
         }
@@ -136,5 +143,13 @@ public class GameLogic {
     // EFFECTS: removes choice from choice history given description, if found
     public void removeChoiceByDescription(String description) {
         choiceHistory.removeChoiceByDescription(description);
+        eventLog.logEvent(new Event("Choice removed from history: " + description));
+    }
+
+    // EFFECTS: prints log of events to console when application is quit
+    public void quitLog() {
+        for (Event event : eventLog) {
+            System.out.println(event.getDescription());
+        }
     }
 }
