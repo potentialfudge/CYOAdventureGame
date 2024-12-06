@@ -23,3 +23,10 @@ As a user, I want to be able to:
 - Have different endings based on my choices and puzzle outcomes, so I can play the game multiple times to discover all possible endings.
 - Be presented with an option to save the current state of the game, i.e. save the current storyboard that I am at to file.
 - Be presented with an option to reload the last saved state or storyboard of the game when I open up the game again, and resume where I left off.
+
+## Instructions for End User
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by selecting one of the choices presented to you at different stages in the story, which adds your selected choices to your choice history. The choice history so far is always displayed at the bottom of the window.
+- You can generate the second required action related to the user story "adding multiple Xs to a Y", which is removing a choice from the choice history, by right clicking on the choice you want to remove and clicking "Remove Choice from History".
+- You can locate my visual component when you first start up the application, as it is an image splash screen.
+- You can save the state of my application by going to the top menu and clicking File > Save and Exit.
+- You can reload the state of my application by going to the top menu and clicking Game Options > Restart.

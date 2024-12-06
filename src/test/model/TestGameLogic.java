@@ -37,19 +37,22 @@ public class TestGameLogic {
     void testSuccessWordGuess() {
         testGameLogic.startNewGame();
         testGameLogic.makeChoice(0);
+        testGameLogic.makeChoice(1);
         assertTrue(testGameLogic.hasWordGuesser());
         testGameLogic.proceedSuccessfulWordGuesser();
-        assertEquals(4, testGameLogic.getCurrentBoardId());
-        assertTrue(testGameLogic.isGameOver());
+        assertEquals(7, testGameLogic.getCurrentBoardId());
+        assertEquals(3, testGameLogic.getChoiceHistory().getChoices().size());
     }
 
     @Test
     void testFailedWordGuess() {
         testGameLogic.startNewGame();
         testGameLogic.makeChoice(0);
+        testGameLogic.makeChoice(1);
         assertTrue(testGameLogic.hasWordGuesser());
         testGameLogic.proceedFailedWordGuesser();
         assertEquals(5, testGameLogic.getCurrentBoardId());
+        assertEquals(3, testGameLogic.getChoiceHistory().getChoices().size());
         assertTrue(testGameLogic.isGameOver());
     }
 
@@ -59,7 +62,7 @@ public class TestGameLogic {
         testGameLogic.makeChoice(0);
         testGameLogic.saveGame();
         assertTrue(testGameLogic.loadGame());
-        assertEquals(2, testGameLogic.getCurrentBoardId());
+        assertEquals(3, testGameLogic.getCurrentBoardId());
     }
 
     @Test

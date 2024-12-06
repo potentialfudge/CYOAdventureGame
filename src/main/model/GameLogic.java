@@ -18,7 +18,6 @@ public class GameLogic {
     private static final String JSON_STORE = "./data/storyGraph.json";
     private static final String JSON_SAVE = "./data/saveState.json";
 
-    // EFFECTS: constructs an adventure game
     public GameLogic() {
         loadStoryBoards();
         currentBoard = story.get(1);
@@ -56,6 +55,7 @@ public class GameLogic {
     // EFFECTS: moves to the next storyboard if word guesser has been successful
     public void proceedSuccessfulWordGuesser() {
         Choice wordChoice = currentBoard.getChoices().get(0);
+        choiceHistory.addHistory(wordChoice);
         currentBoard = getBoardFromId(wordChoice.getNextBoardId());
     }
 
@@ -64,6 +64,7 @@ public class GameLogic {
     // i.e. user did not guess correct word after 6 tries
     public void proceedFailedWordGuesser() {
         Choice wordChoice = currentBoard.getChoices().get(1);
+        choiceHistory.addHistory(wordChoice);
         currentBoard = getBoardFromId(wordChoice.getNextBoardId());
     }
 
@@ -106,7 +107,7 @@ public class GameLogic {
         return currentBoard.hasWordGuesser();
     }
 
-    // EFFECTS: checks if the game is over
+    // EFFECTS: checks if the game is over, i.e the current board has no choices
     public boolean isGameOver() {
         return currentBoard.getChoices().isEmpty();
     }
@@ -116,6 +117,7 @@ public class GameLogic {
         return choiceHistory;
     }
 
+    // MODIFIES: this
     // EFFECTS: handles game save functionality
     public void saveGame() {
         JsonWriter jsonWriter = new JsonWriter("data/saveState.json");
@@ -128,5 +130,11 @@ public class GameLogic {
         } catch (IOException e) {
             System.err.println("Failed to save game: " + e.getMessage());
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes choice from choice history given description, if found
+    public void removeChoiceByDescription(String description) {
+        choiceHistory.removeChoiceByDescription(description);
     }
 }

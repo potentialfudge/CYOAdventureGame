@@ -13,7 +13,7 @@ public class TestChoiceHistory {
     @BeforeEach
     void runBefore() {
         c1 = new Choice("Try to open the door", 2);
-        c1 = new Choice("Try to climb up the wall", 5);
+        c2 = new Choice("Try to climb up the wall", 5);
         testHistory = new ChoiceHistory();
     }
 
@@ -45,5 +45,37 @@ public class TestChoiceHistory {
         assertEquals(2, testHistory.getChoices().size());
         assertEquals(c1, testHistory.getChoices().get(0));
         assertEquals(c1, testHistory.getChoices().get(1));
+    }
+
+    @Test
+    void removeValidChoiceIndex() {
+        testHistory.addHistory(c1);
+        testHistory.addHistory(c2);
+        testHistory.removeChoiceAt(0);
+        assertEquals(1, testHistory.getChoices().size());
+        assertEquals(c2, testHistory.getChoices().get(0));
+    }
+
+    @Test
+    void removeInvalidChoiceIndex() {
+        testHistory.addHistory(c1);
+        testHistory.addHistory(c2);
+        testHistory.removeChoiceAt(3);
+        assertEquals(2, testHistory.getChoices().size());
+        assertEquals(c1, testHistory.getChoices().get(0));
+        assertEquals(c2, testHistory.getChoices().get(1));
+        testHistory.removeChoiceAt(-1);
+        assertEquals(2, testHistory.getChoices().size());
+        assertEquals(c1, testHistory.getChoices().get(0));
+        assertEquals(c2, testHistory.getChoices().get(1));
+    }
+
+    @Test
+    void removeValidChoiceDescription() {
+        testHistory.addHistory(c1);
+        testHistory.addHistory(c2);
+        testHistory.removeChoiceByDescription("Try to climb up the wall");
+        assertEquals(1, testHistory.getChoices().size());
+        assertEquals(c1, testHistory.getChoices().get(0));
     }
 }

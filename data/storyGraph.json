@@ -4,32 +4,32 @@
             "id": 1,
             "description": "You're hiking in the forest by some abandoned ruins when you see something in the bushes out of the corner of your eye. You look for it to see what it is, and it's a clay tablet that looks like it's from at least 2000 years ago. On it, there's something written in a strange language you don't understand, but a few drawings at the bottom resemble a treasure chest of gold, and some other creatures you've never heard of before. There might be a lost treasure, you think.",
             "choices": [
-                { "description": "Go into ruins", "nextBoardId": 2 },
-                { "description": "Explore the forest", "nextBoardId": 3 }
+                { "description": "Go into ruins", "nextBoardId": 3 },
+                { "description": "Explore the forest", "nextBoardId": 11 }
             ],
             "hasWordGuesser": false
         },
         {
             "id": 2,
-            "description": "When you further go into the obscured part of the ruins, you find an extremely dusty locked door, but the lock is nothing like you've ever seen before. It looks like you have to enter some sort of password or code to unlock it. You have 6 tries to guess the secret code!",
+            "description": "When you go down the stairs and reach the bottom, you find an extremely dusty locked door, but the lock is nothing like you've ever seen before. It looks like you have to enter some sort of password or code to unlock it. You have 6 tries to guess the secret code!",
             "choices": [
-                { "description": "You guessed the secret code!", "nextBoardId": 4 },
+                { "description": "You guessed the secret code!", "nextBoardId": 7 },
                 { "description": "You did not guess the code in 6 tries.", "nextBoardId": 5 }
             ],
             "hasWordGuesser": true
         },
         {
             "id": 3,
-            "description": "You hear something rustling in the distance. You walk a little further and suddenly, an enormous creature jumps in front of you. It's the monster from the tablet! He says that he would let you pass through on one condition: you guess his favourite food in 6 tries. Otherwise, he eats you and you die.",
+            "description": "You go further into the obscured part of the ruins. You see two sets of stairs - one leading down and another leading up to what looks like a room of some sort. Which set of stairs do you take?",
             "choices": [
-                { "description": "You guessed his favourite food!", "nextBoardId": 6 },
-                { "description": "You did not guess his favourite food fast enough.", "nextBoardId": 7 }
+                { "description": "Go up the stairs", "nextBoardId": 6 },
+                { "description": "Go down the stairs", "nextBoardId": 2 }
             ],
-            "hasWordGuesser": true
+            "hasWordGuesser": false
         },
         {
             "id": 4,
-            "description": "Congratulations, you have guessed the secret code and unlocked the door! You open the door to find a room with multiple chests full of gold coins. The End",
+            "description": "Congratulations, you have guessed the secret code and unlocked the chest! You open it to find it full of gold coins and other antiques. The End",
             "choices": [],
             "hasWordGuesser": false
         },
@@ -40,16 +40,96 @@
             "hasWordGuesser": false
         },
         {
-            "id": 7,
-            "description": "You did not guess his favourite food fast enough, and he gets impatient. He eats you, and you die. The End",
+            "id": 6,
+            "description": "You decide to try to go up the stairs to the mysterious room. However, these are ruins, and the stairs collapse under your weight and all the debris falls on you, killing you. The End",
             "choices": [],
             "hasWordGuesser": false
         },
         {
-            "id": 6,
-            "description": "That's right, it's human -- so he eats you anyway! The End",
+            "id": 7,
+            "description": "The door opens to reveal a long pathway. You walk along it, and at the end, you can either go left or right.",
+            "choices": [
+                { "description": "Go left", "nextBoardId": 8 },
+                { "description": "Go right", "nextBoardId": 9 }
+            ],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 8,
+            "description": "After you go down the corridor on the left, you run into AJ and Big Justice. Unfortunately for you, they were in a bad mood and declared you as a DOOM. They put you in a chicken bake, and you die. The End",
             "choices": [],
             "hasWordGuesser": false
+        },
+        {
+            "id": 9,
+            "description": "You go through the corridor on the right and you end up at another set of stairs leading down. You take them, which lead you to a door that was slightly ajar with a broken lock on the floor. You go inside, and you find a big chest that still had an intact lock. Maybe there were people here before and were unable to open the chest? You like a good challenge, so you decide to take a crack at it. You have to guess a 5-letter word in 6 tries.",
+            "choices": [
+                { "description": "You guessed the secret code!", "nextBoardId": 4 },
+                { "description": "You did not guess the code in 6 tries.", "nextBoardId": 10 }
+            ],
+            "hasWordGuesser": true
+        },
+        {
+            "id": 10,
+            "description": "Looks like whoever lost this didn't like that. The whole room collapses on you, and you die. The End",
+            "choices": [],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 11,
+            "description": "You decide to explore the forest, and you come across a very large tree with a door.",
+            "choices": [
+                { "description": "Try to open the door", "nextBoardId": 12 },
+                { "description": "Ignore it and keep walking", "nextBoardId": 18 }
+            ],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 12,
+            "description": "Looks like this door requires a code to open it - a 5-letter word, and you only get 6 tries to guess it!",
+            "choices": [
+                { "description": "You guessed the code!", "nextBoardId": 14 },
+                { "description": "You did not guess the code in 6 tries.", "nextBoardId": 13 }
+            ],
+            "hasWordGuesser": true
+        },
+        {
+            "id": 13,
+            "description": "You did not guess the code in 6 tries. The tree falls on to you, and you die. The End",
+            "choices": [],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 14,
+            "description": "The door opens, and it's a big room inside with random furniture laying around. You're shocked and thinking how this could fit inside a tree trunk. Right then, a very pretty woman comes up to you and introduces herself as Livvy Dunne. What do you do?",
+            "choices": [
+                { "description": "Rizz her up", "nextBoardId": 15 },
+                { "description": "Ignore her", "nextBoardId": 16 }
+            ],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 15,
+            "description": "She looks very flattered and happy about that, and hearing about your quest, shows you a secret trapdoor which she says will lead you to the lost treasure.",
+            "choices": [
+                { "description": "Go down the trapdoor", "nextBoardId": 17 }
+            ],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 16,
+            "description": "She did't like that. She calls her friend Baby Gronk and he beats you up. The End",
+            "choices": [],
+            "hasWordGuesser": false
+        },
+        {
+            "id": 17,
+            "description": "You go down the trapdoor, which leads you to - you guessed it - another locked door. You know the drill: 5-letter word, 6 tries.",
+            "choices": [
+                { "description": "You guessed the code!", "nextBoardId": 7 },
+                { "description": "You did not guess the code in 6 tries.", "nextBoardId": 5 }
+            ],
+            "hasWordGuesser": true
         }
     ]
 }

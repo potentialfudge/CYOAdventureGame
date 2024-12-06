@@ -28,4 +28,20 @@ public class ChoiceHistory {
     public List<Choice> getChoices() {
         return choices;
     }
+
+    // MODIFIES: this
+    // EFFECTS: removes a choice at the specified index, if valid
+    public boolean removeChoiceAt(int index) {
+        if (index >= 0 && index < choices.size()) {
+            choices.remove(index);
+            return true;
+        }
+        return false;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes a choice by its description, if found
+    public boolean removeChoiceByDescription(String description) {
+        return choices.removeIf(choice -> choice.getDescription().equals(description));
+    }
 }

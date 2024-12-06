@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.Image;
 import java.net.URL;
 
+// Represents the splash screen shown at game startup
 public class SplashScreen {
     private JFrame frame;
 
@@ -39,6 +40,8 @@ public class SplashScreen {
         frame.setLocationRelativeTo(null);
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays splash screen for a specified amount of time
     public void showSplashScreen(int duration, Runnable onCloseAction) {
         frame.setVisible(true);
         Timer timer = new Timer(duration, e -> {
